@@ -14,7 +14,8 @@ describe(`Function 'isPasswordActual':`, () => {
   });
 
   it(`should return a string`, () => {
-    expect(typeof isPasswordActual(2020, 6, 9)).toBe('string');
+    expect(typeof isPasswordActual(today.year, today.month, today.date))
+      .toBe('string');
   });
 
   it(`should ask to change the password if was changed a year ago`, () => {
@@ -26,18 +27,30 @@ describe(`Function 'isPasswordActual':`, () => {
 
   it('If 30 days or less have passed since the last password change, '
   + 'the function returns the message: \'Password is actual.\'', () => {
-    expect(isPasswordActual(2025, 7, 1)).toBe('Password is actual.');
+    expect(isPasswordActual(today.year, today.month, today.date))
+      .toBe('Password is actual.');
   });
 
   it('If more than 30 days have passed since the last password change, the func'
     + 'tion returns the message: \'You should change your password.\'', () => {
-    expect(isPasswordActual(2025, 6, 1))
+    const dateCopy = new Date();
+
+    dateCopy.setDate(dateCopy.getDate() - 1);
+
+    expect(isPasswordActual(
+      dateCopy.getFullYear(), dateCopy.getMonth(), dateCopy.getDate()))
       .toBe('You should change your password.');
   });
 
   it('If more than 60 days have passed since the last password change, the func'
     + 'tion returns the message: \'Immediately change the password!\'', () => {
-    expect(isPasswordActual(2023, 6, 9))
+    const dateCopy = new Date();
+
+    dateCopy.setMonth(dateCopy.getMonth() - 1);
+    dateCopy.setDate(dateCopy.getDate() - 1);
+
+    expect(isPasswordActual(
+      dateCopy.getFullYear(), dateCopy.getMonth(), dateCopy.getDate()))
       .toBe('Immediately change the password!');
   });
 });
