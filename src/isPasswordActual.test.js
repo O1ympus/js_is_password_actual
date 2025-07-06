@@ -35,10 +35,10 @@ describe(`Function 'isPasswordActual':`, () => {
     + 'tion returns the message: \'You should change your password.\'', () => {
     const dateCopy = new Date();
 
-    dateCopy.setDate(dateCopy.getDate() - 1);
+    dateCopy.setDate(dateCopy.getDate() - 31);
 
     expect(isPasswordActual(
-      dateCopy.getFullYear(), dateCopy.getMonth(), dateCopy.getDate()))
+      dateCopy.getFullYear(), dateCopy.getMonth() + 1, dateCopy.getDate()))
       .toBe('You should change your password.');
   });
 
@@ -46,11 +46,10 @@ describe(`Function 'isPasswordActual':`, () => {
     + 'tion returns the message: \'Immediately change the password!\'', () => {
     const dateCopy = new Date();
 
-    dateCopy.setMonth(dateCopy.getMonth() - 1);
-    dateCopy.setDate(dateCopy.getDate() - 1);
+    dateCopy.setDate(dateCopy.getDate() - 61);
 
     expect(isPasswordActual(
-      dateCopy.getFullYear(), dateCopy.getMonth(), dateCopy.getDate()))
+      dateCopy.getFullYear(), dateCopy.getMonth() + 1, dateCopy.getDate()))
       .toBe('Immediately change the password!');
   });
 });
